@@ -16,16 +16,16 @@
         <img src="{{ $background_image | relURL }}" alt="Background" class="w-full h-full object-cover">
     </div>
     {{ end }}
-    <div class="container pt-16 pb-20 md:pt-24 md:pb-28">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
+    <div class="container pt-20 pb-24 md:pt-28 md:pb-32">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
             <div class="space-y-8">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-primary-900">
                     {{ $headline | safeHTML }}
                 </h1>
-                <p class="text-xl text-gray-600">
+                <p class="text-xl text-gray-700 leading-relaxed">
                     {{ $sub_headline | safeHTML }}
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
                     {{ if and $primary_button_text $primary_button_url }}
                     <a href="{{ $primary_button_url }}" class="btn-primary text-center">
                         {{ $primary_button_text }}
@@ -40,13 +40,19 @@
             </div>
             <div class="relative">
                 {{ if $hero_image }}
-                <div class="relative z-10">
-                    <img src="{{ $hero_image | relURL }}" alt="Hero Image" class="rounded-xl shadow-elevation">
+                <div class="relative z-10 hero-image-container">
+                    <img src="{{ $hero_image | relURL }}" alt="Hero Image" class="w-full h-auto">
+                    <!-- Additional blur elements for better edge blending -->
+                    <div class="absolute -bottom-8 inset-x-12 h-16 bg-gradient-to-b from-transparent to-blue-50 opacity-30 blur-lg"></div>
+                    <div class="absolute -right-10 inset-y-10 w-20 bg-gradient-to-r from-transparent to-blue-50 opacity-30 blur-xl"></div>
+                    <div class="absolute -left-10 inset-y-10 w-20 bg-gradient-to-l from-transparent to-blue-50 opacity-30 blur-xl"></div>
                 </div>
                 {{ end }}
                 <!-- Background decoration -->
-                <div class="absolute -top-20 -right-20 w-64 h-64 bg-primary-100 rounded-full filter blur-3xl opacity-50"></div>
-                <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-secondary-100 rounded-full filter blur-3xl opacity-50"></div>
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-primary-100 rounded-full filter blur-3xl opacity-30"></div>
+                <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-secondary-100 rounded-full filter blur-3xl opacity-30"></div>
+                <!-- Gold accent element -->
+                <div class="absolute -bottom-10 right-16 w-16 h-16 bg-gold/20 rounded-full filter blur-xl"></div>
             </div>
         </div>
     </div>
