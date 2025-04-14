@@ -89,17 +89,24 @@
     <!-- Footer -->
     {{ partial "footer" . }}
 
-    <!-- Mobile Menu Script -->
+    <!-- Scripts -->
+    {{ with resources.Get "js/main.js" }}
+        {{ $js := . | js.Build | minify | fingerprint }}
+        <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+    {{ end }}
+    
+    {{ if .Site.Params.googleAnalytics }}
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.googleAnalytics }}"></script>
     <script>
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        if (mobileMenuButton) {
-            mobileMenuButton.addEventListener('click', function() {
-                const mobileMenu = document.getElementById('mobile-menu');
-                if (mobileMenu) {
-                    mobileMenu.classList.toggle('hidden');
-                }
-            });
-        }
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ .Site.Params.googleAnalytics }}');
     </script>
+    {{ end }}
+    
+    <!-- Additional Scripts -->
+    {{ block "scripts" . }}{{ end }}
 </body>
 </html>

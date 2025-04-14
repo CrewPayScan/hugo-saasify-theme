@@ -1,5 +1,6 @@
 @tailwind base;
 @tailwind components;
+@import "components.css";
 @tailwind utilities;
 
 @layer base {
@@ -19,6 +20,52 @@
 @layer utilities {
   .rounded-lg {
     border-radius: 2rem;
+  }
+
+  @keyframes pulse-slide {
+    0% {
+      transform: translateX(-50%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(50%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulse-slide-vertical {
+    0% {
+      transform: translateY(-50%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(50%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes bounce-rotate {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-4px) rotate(5deg);
+    }
+  }
+
+  @keyframes scale-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
   }
 }
 
@@ -183,5 +230,74 @@
 
   .table-of-contents ul {
     @apply list-none ml-4 space-y-2;
+  }
+
+  /* Card Pair Container */
+  .card-pair-container {
+    @apply relative flex flex-col md:flex-row gap-8 p-4 transition-all duration-300;
+  }
+
+  .card-pair-container:hover {
+    @apply -translate-y-1;
+  }
+
+  .card-pair-container::before {
+    @apply content-[''] absolute inset-[-4px] rounded-2xl opacity-0 transition-opacity duration-300 -z-10 pointer-events-none;
+    background: linear-gradient(90deg, rgba(220,38,38,0.05), rgba(0,128,128,0.05));
+  }
+
+  .card-pair-container:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Challenge and Solution Cards */
+  .challenge-card,
+  .solution-card {
+    @apply relative flex-1 bg-white p-8 rounded-xl shadow-md transition-all duration-300;
+  }
+
+  .card-pair-container:hover .challenge-card,
+  .card-pair-container:hover .solution-card {
+    @apply shadow-lg;
+  }
+
+  /* Connector Line */
+  .connector-line {
+    @apply absolute top-1/2 left-1/4 right-1/4 h-0.5 -translate-y-1/2 z-10 overflow-hidden;
+    background: linear-gradient(90deg, rgba(220,38,38,0.1), rgba(0,128,128,0.1));
+  }
+
+  .connector-line::after {
+    @apply content-[''] absolute top-0 left-[-100%] w-[200%] h-full;
+    background: linear-gradient(90deg, transparent, rgba(220,38,38,0.3), rgba(0,128,128,0.3), transparent);
+    animation: pulse-slide 3s ease-in-out infinite;
+  }
+
+  /* Mobile Connector */
+  @media (max-width: 767px) {
+    .mobile-connector {
+      @apply absolute left-1/2 bottom-[-1rem] w-0.5 h-8 -translate-x-1/2;
+      background: linear-gradient(180deg, rgba(220,38,38,0.1), rgba(0,128,128,0.1));
+    }
+
+    .mobile-connector::after {
+      @apply content-[''] absolute top-[-100%] left-0 w-full h-[200%];
+      background: linear-gradient(180deg, transparent, rgba(220,38,38,0.3), rgba(0,128,128,0.3), transparent);
+      animation: pulse-slide-vertical 3s ease-in-out infinite;
+    }
+  }
+
+  /* Icons */
+  .challenge-icon,
+  .solution-icon {
+    @apply transition-transform duration-300;
+  }
+
+  .card-pair-container:hover .challenge-icon {
+    animation: bounce-rotate 1s ease-in-out infinite;
+  }
+
+  .card-pair-container:hover .solution-icon {
+    animation: scale-pulse 1s ease-in-out infinite;
   }
 }
