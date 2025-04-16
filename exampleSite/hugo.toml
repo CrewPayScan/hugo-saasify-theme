@@ -232,5 +232,5 @@ paginatePath = "page"
     weight = 1
   [[menu.footer_column_3]]
     name = "Privacy Policy"
-    url = "/privacy"
+    url = "/legal/privacy-policy/"
     weight = 2

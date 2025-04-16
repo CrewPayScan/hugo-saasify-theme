@@ -45,15 +45,9 @@
                 <!-- CTA Buttons -->
                 {{ if not $headerConfig.hideButtons }}
                 <div class="hidden md:flex items-center space-x-4">
-                    {{ with $headerConfig.buttons.signIn }}
-                    <a href="{{ .url | default "#" }}" class="{{ with .class }}{{ . }}{{ else }}hidden lg:inline-flex items-center justify-center px-6 py-3 rounded-md font-bold transition duration-200 ease-in-out border-2 border-primary-900 text-primary-900 hover:border-primary-800 hover:text-primary-800{{ end }}">
-                        {{ .text | default "Sign in" }}
-                    </a>
-                    {{ end }}
-                    
-                    {{ with $headerConfig.buttons.getStarted }}
-                    <a href="{{ .url | default "#" }}" class="{{ with .class }}{{ . }}{{ else }}hidden lg:inline-flex items-center justify-center px-6 py-3 rounded-md font-bold transition duration-200 ease-in-out bg-primary-900 text-white hover:bg-primary-800 hover:scale-105{{ end }}">
-                        {{ .text | default "Get Started" }}
+                    {{ range $key, $button := .Site.Params.header.buttons }}
+                    <a href="{{ $button.url | default "#" }}" class="{{ with $button.class }}{{ . }}{{ else }}inline-flex items-center justify-center px-6 py-3 rounded-md font-bold transition duration-200 ease-in-out border-2 border-gray-200 hover:border-primary-600 hover:text-primary-600{{ end }}">
+                        {{ $button.text | default (humanize $key) }}
                     </a>
                     {{ end }}
                 </div>
@@ -90,15 +84,9 @@
                 
                 {{ if not $headerConfig.hideButtons }}
                 <div class="pt-4 space-y-4">
-                    {{ with $headerConfig.buttons.signIn }}
-                    <a href="{{ .url | default "#" }}" class="{{ with .mobileClass }}{{ . }}{{ else }}block text-center px-6 py-3 rounded-md font-bold transition duration-200 ease-in-out border-2 border-primary-900 text-primary-900 hover:border-primary-800 hover:text-primary-800{{ end }}">
-                        {{ .text | default "Sign in" }}
-                    </a>
-                    {{ end }}
-                    
-                    {{ with $headerConfig.buttons.getStarted }}
-                    <a href="{{ .url | default "#" }}" class="{{ with .mobileClass }}{{ . }}{{ else }}block text-center px-6 py-3 rounded-md font-bold transition duration-200 ease-in-out bg-primary-900 text-white hover:bg-primary-800 hover:scale-105{{ end }}">
-                        {{ .text | default "Get Started" }}
+                    {{ range $key, $button := .Site.Params.header.buttons }}
+                    <a href="{{ $button.url | default "#" }}" class="{{ with $button.mobileClass }}{{ . | safeHTML }}{{ else }}{{ with $button.class }}{{ . | safeHTML }}{{ else }}block text-center px-6 py-3 rounded-md font-bold transition duration-200 ease-in-out border-2 border-gray-200 text-gray-900 hover:border-primary-600 hover:text-primary-600{{ end }}{{ end }}">
+                        {{ $button.text | default (humanize $key) }}
                     </a>
                     {{ end }}
                 </div>
